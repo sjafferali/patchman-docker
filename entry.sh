@@ -51,6 +51,13 @@ for str in ${REPORT_HOSTS//,/ } ; do
 done
 a2enconf patchman
 
+mkdir -pv /var/lib/patchman/static/
+rsync -avz /usr/share/patchman/static/ /var/lib/patchman/static/
+chown -Rv :www-data /etc/patchman
+chmod -R g+rw /etc/patchman
+chown -R :www-data /var/lib/patchman
+chmod -R g+rw /var/lib/patchman/
+
 export APACHE_RUN_USER=www-data
 export APACHE_RUN_GROUP=www-data
 export APACHE_LOG_DIR=/var/log/apache2

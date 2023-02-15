@@ -2,18 +2,54 @@
 
 CONFIG_PATH="/etc/patchman/local_settings.py"
 
-if [[ "$DBTYPE" != "mysql" ]] ; then
-cat <<EOF > $CONFIG_PATH
+setup_database () {
+    case $DB_TYPE in
+        "mysql")
+            cat <<EOF > $CONFIG_PATH
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.mysql',
+       'NAME': '${DB_NAME}',
+       'USER': '${DB_USER}',
+       'PASSWORD': '${DB_PASS}',
+       'HOST': '${DB_HOST}',
+       'PORT': '${DB_PORT}',
+       'STORAGE_ENGINE': 'INNODB',
+       'CHARSET' : 'utf8'
+   }
+}
+EOF
+        ;;
+        "pgsql")
+            cat <<EOF > $CONFIG_PATH
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+       'NAME': '${DB_NAME}',
+       'USER': '${DB_USER}',
+       'PASSWORD': '${DB_PASS}',
+       'HOST': '${DB_HOST}',
+       'PORT': '${DB_PORT}',
+       'CHARSET' : 'utf8'
+   }
+}
+EOF
+        ;;
+        *)
+            cat <<EOF > $CONFIG_PATH
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': '/var/lib/patchman/db/patchman.db'
     }
 }
-
 EOF
-fi
+        ;;
+    esac
+}
 
+
+setup_database
 
 cat <<EOF >> $CONFIG_PATH
 ADMINS = (

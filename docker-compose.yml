@@ -5,7 +5,7 @@ services:
     image: sjafferali/patchman:latest
     environment:
       TZ: America/Los_Angeles
-      DBTYPE: sqlite
+      DB_TYPE: sqlite
       SECRET_KEY: ${SECRET_KEY}
       REPORT_HOSTS: 192.168.10.0/24,192.168.60.0/24
     expose:

@@ -45,4 +45,10 @@ patchman-manage makemigrations
 patchman-manage migrate --run-syncdb
 patchman-manage collectstatic
 
+cp -f /srv/patchman/etc/patchman/apache.conf.example /etc/apache2/conf-available/patchman.conf
+for str in ${REPORT_HOSTS//,/ } ; do
+    sed -i "s,Require ip ::1/128,&\n    Require ip $str," /etc/apache2/conf-available/patchman.conf
+done
+a2enconf patchman
+
 /usr/sbin/apache2

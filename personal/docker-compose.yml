@@ -7,7 +7,12 @@ services:
       TZ: America/Los_Angeles
       DBTYPE: sqlite
       SECRET_KEY: ${SECRET_KEY}
-      REPORT_HOSTS: 192.168.10.0/24,192.168.60.0/24
+      REPORT_HOSTS: 192.168.0.0/16
     expose:
       - 80
+    networks:
+      z_internal:
     restart: unless-stopped
+networks:
+  z_internal:
+    external: true

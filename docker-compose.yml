@@ -1,0 +1,17 @@
+version: '3'
+services:
+  patchman:
+    container_name: patchman
+    image: sjafferali/patchman:latest
+    environment:
+      TZ: America/Los_Angeles
+      DBTYPE: sqlite
+      SECRET_KEY: ${SECRET_KEY}
+    expose:
+      - 80
+    networks:
+      z_internal:
+    restart: unless-stopped
+networks:
+  z_internal:
+    external: true

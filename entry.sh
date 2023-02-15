@@ -53,6 +53,7 @@ a2enconf patchman
 
 mkdir -pv /var/lib/patchman/static/
 rsync -avz /usr/share/patchman/static/ /var/lib/patchman/static/
+rsync -avz /usr/lib/python3/dist-packages/django/contrib/admin/static/ /var/lib/patchman/static/
 chown -Rv :www-data /etc/patchman
 chmod -R g+rw /etc/patchman
 chown -R :www-data /var/lib/patchman

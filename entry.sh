@@ -51,4 +51,8 @@ for str in ${REPORT_HOSTS//,/ } ; do
 done
 a2enconf patchman
 
-/usr/sbin/apache2
+export APACHE_RUN_USER=www-data
+export APACHE_RUN_GROUP=www-data
+export APACHE_LOG_DIR=/var/log/apache2
+
+apachectl -D FOREGROUND

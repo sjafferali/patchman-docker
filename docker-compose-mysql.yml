@@ -28,7 +28,6 @@ services:
     restart: unless-stopped
     volumes:
       - db:/var/lib/mysql
-    restart: unless-stopped
     healthcheck:
       test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
       interval: 10s

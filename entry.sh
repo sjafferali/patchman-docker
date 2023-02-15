@@ -101,6 +101,7 @@ export APACHE_RUN_USER=www-data
 export APACHE_RUN_GROUP=www-data
 export APACHE_LOG_DIR=/var/log/apache2
 
+service redis-server restart
 C_FORCE_ROOT=1 celery -b redis://127.0.0.1:6379/0 -A patchman worker -l INFO -E &
 
 apachectl -D FOREGROUND

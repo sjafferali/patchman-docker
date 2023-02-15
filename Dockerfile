@@ -21,6 +21,7 @@ RUN a2enmod wsgi && \
     a2enconf patchman
 RUN chown -R :www-data /etc/patchman && \
     chmod -R g+r /etc/patchman && \
-    chown -R :www-data /var/lib/patchman && \
-    chmod -R g+w /var/lib/patchman/db
+    chown -R :www-data /var/lib/patchman /srv/patchman && \
+    chmod -R g+w /var/lib/patchman/db && \
+    chmod -R g+rwx /srv/patchman
 ENTRYPOINT ["/entry.sh"]

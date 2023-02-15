@@ -15,8 +15,8 @@ RUN mkdir -pv /etc/patchman /var/lib/patchman/db
 RUN cd /srv/patchman && ./setup.py install
 ADD entry.sh /entry.sh
 RUN chmod 755 /entry.sh
-RUN a2enmod wsgi \
-    cp /srv/patchman/etc/patchman/apache.conf.example /etc/apache2/conf-available/patchman.conf \
+RUN a2enmod wsgi && \
+    cp /srv/patchman/etc/patchman/apache.conf.example /etc/apache2/conf-available/patchman.conf && \
     a2enconf patchman
 RUN chown -R :www-data /etc/patchman && \
     chmod -R g+r /etc/patchman && \

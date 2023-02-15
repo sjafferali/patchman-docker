@@ -56,6 +56,8 @@ ADMINS = (
     ('admin', 'admin@admin.com'),
 )
 
+USE_ASYNC_PROCESSING = True
+
 TIME_ZONE = '${TZ}'
 
 LANGUAGE_CODE = 'en-us'
@@ -98,5 +100,7 @@ chmod -R g+rw /var/lib/patchman/
 export APACHE_RUN_USER=www-data
 export APACHE_RUN_GROUP=www-data
 export APACHE_LOG_DIR=/var/log/apache2
+
+C_FORCE_ROOT=1 celery -b redis://127.0.0.1:6379/0 -A patchman worker -l INFO -E &
 
 apachectl -D FOREGROUND

@@ -6,7 +6,7 @@ RUN apt -y install python3-django python3-django-tagging python3-django-extensio
     python3-djangorestframework python3-defusedxml python3-lxml python3-requests \
     python3-rpm python3-debian python3-colorama python3-humanize python3-magic \
     python3-pip python3-progressbar python3-gunicorn gunicorn python3-whitenoise \
-    apache2 libapache2-mod-wsgi-py3
+    apache2 libapache2-mod-wsgi-py3 rsync
 
 RUN pip3 install django-bootstrap3
 RUN git clone https://github.com/furlongm/patchman /srv/patchman

@@ -45,5 +45,4 @@ patchman-manage makemigrations
 patchman-manage migrate --run-syncdb
 patchman-manage collectstatic
 
-cd /srv/patchman && gunicorn patchman.wsgi -b 0.0.0.0:80
-
+/usr/sbin/apache2

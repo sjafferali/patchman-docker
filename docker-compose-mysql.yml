@@ -29,12 +29,6 @@ services:
     restart: unless-stopped
     volumes:
       - db:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
-      interval: 10s
-      timeout: 3s
-      retries: 3
-      start_period: 30s
   cachedb:
     container_name: patchman-memcached
     image: memcached:latest

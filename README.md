@@ -44,6 +44,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
       DB_NAME: ${DB_NAME}
+      MEMCACHED_LOCATION: cachedb:11211
     expose:
       - 80
     restart: unless-stopped
@@ -61,12 +62,10 @@ services:
     volumes:
       - db:/var/lib/mysql
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
-      interval: 10s
-      timeout: 3s
-      retries: 3
-      start_period: 30s
+  cachedb:
+    container_name: patchman-memcached
+    image: memcached:latest
+    restart: unless-stopped
 volumes:
   db:
 ```

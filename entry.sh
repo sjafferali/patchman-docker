@@ -53,7 +53,7 @@ setup_database
 
 cat <<EOF >> $CONFIG_PATH
 ADMINS = (
-    ('admin', 'admin@admin.com'),
+    ('${ADMIN_USER}', '${ADMIN_EMAIL}'),
 )
 
 USE_ASYNC_PROCESSING = True
@@ -95,6 +95,51 @@ cp -f /srv/patchman/etc/patchman/apache.conf.example /etc/apache2/conf-available
 for str in ${REPORT_HOSTS//,/ } ; do
     sed -i "s,Require ip ::1/128,&\n    Require ip $str," /etc/apache2/conf-available/patchman.conf
 done
+
+if [[ "$OPENID_AUTH" == "1" ]]; then
+cat <<EOF >> /etc/apache2/conf-available/patchman.conf
+OIDCProviderMetadataURL ${OIDCProviderMetadataURL}
+OIDCClientID ${OIDCClientID}
+OIDCClientSecret ${OIDCClientSecret}
+
+# OIDCRedirectURI is a vanity URL that must point to a path protected by this module but must NOT point to any content
+OIDCRedirectURI ${OIDCRedirectURI}
+OIDCCryptoPassphrase ${OIDCCryptoPassphrase}
+OIDCScope "${OIDCCryptoPassphrase}"
+OIDCRemoteUserClaim ${OIDCRemoteUserClaim}
+
+
+<Location /patchman>
+   AuthType openid-connect
+   Require valid-user
+</Location>
+EOF
+
+cat <<EOF >> $CONFIG_PATH
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.RemoteUserBackend',
+    'django.contrib.auth.backends.ModelBackend'
+]
+
+EOF
+
+fi
+
 a2enconf patchman
 
 mkdir -pv /var/lib/patchman/static/

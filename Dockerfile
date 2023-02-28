@@ -21,7 +21,7 @@ RUN chmod 755 /entry.sh
 RUN a2enmod wsgi && \
     a2enmod headers && \
     a2enmod rewrite && \
-    a2enmod auth_openid && \
+    a2enmod auth_openidc && \
     cp /srv/patchman/etc/patchman/apache.conf.example /etc/apache2/conf-available/patchman.conf && \
     a2enconf patchman
 RUN chown -R :www-data /etc/patchman && \

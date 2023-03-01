@@ -105,7 +105,7 @@ OIDCClientSecret ${OIDCClientSecret}
 # OIDCRedirectURI is a vanity URL that must point to a path protected by this module but must NOT point to any content
 OIDCRedirectURI ${OIDCRedirectURI}
 OIDCCryptoPassphrase ${OIDCCryptoPassphrase}
-OIDCScope "${OIDCCryptoPassphrase}"
+OIDCScope "${OIDCScope}"
 OIDCRemoteUserClaim ${OIDCRemoteUserClaim}
 
 

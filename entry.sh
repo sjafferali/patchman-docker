@@ -109,6 +109,12 @@ OIDCScope "${OIDCScope}"
 OIDCRemoteUserClaim ${OIDCRemoteUserClaim}
 
 
+<Location /patchman/reports/upload>
+    Order deny,allow
+    Allow from all
+    Satisfy any
+</Location>
+
 <Location /patchman>
    AuthType openid-connect
    Require valid-user

@@ -9,8 +9,13 @@ jobs:
   docker-arm:
     strategy:
       matrix:
-        runs-on: [buildjet-2vcpu-ubuntu-2204-arm, buildjet-4vcpu-ubuntu-2204-arm, buildjet-8vcpu-ubuntu-2204-arm]
-    name: Test - ${{matrix.runs-on}}
+        arch: [amd64, arm64]
+        include:
+          - arch: amd64
+            runs-on: ubuntu-22.04
+          - arch: arm64
+            runs-on: buildjet-2vcpu-ubuntu-2204-arm
+    name: Build on arch ${{matrix.arch}} on ${{matrix.runs-on}} runner
     runs-on: ${{matrix.runs-on}}
     steps:
       -
@@ -30,6 +35,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/arm64
+          platforms: linux/${{matrix.arch}}
           push: true
           tags: sjafferali/patchman:latest

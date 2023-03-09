@@ -12,7 +12,7 @@ jobs:
         arch: [amd64, arm64]
         include:
           - arch: amd64
-            runs-on: ubuntu-22.04
+            runs-on: buildjet-2vcpu-ubuntu-2204
           - arch: arm64
             runs-on: buildjet-2vcpu-ubuntu-2204-arm
     name: Build on arch ${{matrix.arch}} on ${{matrix.runs-on}} runner

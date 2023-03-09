@@ -7,7 +7,11 @@ on:
 
 jobs:
   docker-arm:
-    runs-on: buildjet-4vcpu-ubuntu-2204-arm
+    strategy:
+      matrix:
+        runs-on: [buildjet-2vcpu-ubuntu-2204-arm, buildjet-4vcpu-ubuntu-2204-arm, buildjet-8vcpu-ubuntu-2204-arm]
+    name: Test - ${{matrix.runs-on}}
+    runs-on: ${{matrix.runs-on}}
     steps:
       -
         name: Checkout
